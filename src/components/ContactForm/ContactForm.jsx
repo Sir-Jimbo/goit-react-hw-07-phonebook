@@ -1,8 +1,8 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../../redux/phonebook/phonebook-actions';
-import { CSSTransition } from 'react-transition-group';
-import Notification from 'components/Notification/Notification';
+import operations from '../../redux/phonebook/phonebook-operations'
+import selectors from '../../redux/phonebook/phonebook-selectors';
+import Notification from '../../components/Notification/Notification';
 import s from './ContactForm.module.css'
 
 class ContactForm extends Component {
@@ -11,11 +11,10 @@ class ContactForm extends Component {
       name: '',
       number: '',
       message: null,
-      error: false,
    }
 
    isShowMessage = (error) => {
-      this.setState({ message: error });
+      this.setState({ message: false });
       setTimeout(() => {
          this.setState({ message: null });
       }, 2500);
@@ -65,15 +64,10 @@ class ContactForm extends Component {
       const { name, number, message } = this.state;
       return (
          <>
-            <CSSTransition
-               in={message}
-               timeout={250}
-               classNames={s}
-               unmountOnExit
-            >
-               <Notification
-                  message={message} />
-            </CSSTransition>
+
+            <Notification
+               message={message} />
+
             <form className={s.container} onSubmit={this.handleSubmit}>
 
                <label className={s.label}>
@@ -103,12 +97,12 @@ class ContactForm extends Component {
       );
    }
 }
-const mapStateToProps = state => ({
-   contacts: state.phonebook.contacts,
+const mapStateToProps = (state) => ({
+   contacts: selectors.getAllContacts(state),
 })
 
 const mapDispatchToProps = dispatch => ({
-   onSubmit: (name, number) => dispatch(actions.addContact(name, number)),
+   onSubmit: (name, number) => dispatch(operations.addContact(name, number)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);

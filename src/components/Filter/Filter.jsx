@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
-import * as actions from '../../redux/phonebook/phonebook-actions';
+import * as phonebookActions from '../../redux/phonebook/phonebook-actions';
+import selectors from '../../redux/phonebook/phonebook-selectors';
 import { CSSTransition } from 'react-transition-group';
 import s from './Filter.module.css';
 
@@ -30,13 +31,14 @@ const Filter = ({ value, onChange, contacts }) => {
       </CSSTransition>
    );
 }
-const mapStateToProps = state => ({
-   contacts: state.phonebook.contacts,
-   value: state.phonebook.filter
-});
+const mapStateToProps = (state) => ({
+   value: selectors.getFilter(state),
+   contacts: selectors.getAllContacts(state),
+})
 
 const mapDispatchToProps = dispatch => ({
-   onChange: (e) => dispatch(actions.changeFilter(e.currentTarget.value)),
-});
+   onChangeFilter: e => dispatch(phonebookActions.changeFilter(e.target.value))
+})
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filter);
