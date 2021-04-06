@@ -6,11 +6,11 @@ import Section from 'components/Section/Section';
 import ContactForm from 'components/ContactForm/ContactForm';
 import Filter from 'components/Filter/Filter';
 import ContactList from 'components/ContactList/ContactList';
-import operations from './redux/phonebook/phonebook-operations';
-import Spinner from './components/Spinner/Spinner';
-import Notification from './components/Notification/Notification';
-import selectors from './redux/phonebook/phonebook-selectors';
-import s from './components/PhoneBook/PhoneBook.module.css';
+import operations from '../../redux/phonebook/phonebook-operations';
+import Spinner from '../Spinner/Spinner';
+import Notification from '../Notification/Notification';
+import selectors from '../../redux/phonebook/phonebook-selectors';
+import s from './App.module.css';
 
 class App extends Component {
 
